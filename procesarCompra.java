@@ -243,6 +243,7 @@ public class procesarCompra {
             System.out.println("==== BOLETA DE RESERVA =====");
             System.out.println("Asiento: " + codigo);
             System.out.println("Fila: " + fila + " | Columna: " + nro);
+            System.out.println("precio:  " + precio);
             System.out.println("Descuento: $" + descuento);
             System.out.println("Total a pagar: $" + totalapagar);
             System.out.println("============================");
