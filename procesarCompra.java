@@ -255,7 +255,7 @@ public class procesarCompra {
 
         boolean opcionValida = false;
 
-        while (!opcionValida) {
+        do {
 
             try {
                 System.out.print("¿Desea realizar otra reserva? (1 = Sí, 0 = No): ");// Al final del proceso, preguntar si desea continuar
@@ -272,7 +272,7 @@ public class procesarCompra {
                 sc.nextLine();
             }
 
-        }//Fin while opción valida
+        } while (!opcionValida);//Fin while opción valida
 
 
 
