@@ -4,7 +4,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class procesarCompra {
-    Scanner sc = new Scanner(System.in);
+
 
     static Boolean A1 = false, A2 = false, A3 = false, A4 = false, A5 = false, A6 = false;
     static Boolean B1 = false, B2 = false, B3 = false, B4 = false, B5 = false, B6 = false;
@@ -253,10 +253,29 @@ public class procesarCompra {
         }// Usar la variable estática de la clase Main
 
 
-            // Al final del proceso, preguntar si desea continuar
-            System.out.print("¿Desea realizar otra reserva? (1 = Sí, 0 = No): ");
-            formativas4.op = sc.nextInt(); // Actualizar la variable estática
-            sc.nextLine(); // Limpiar el buffer
+        boolean opcionValida = false;
+
+        while (!opcionValida) {
+
+            try {
+                System.out.print("¿Desea realizar otra reserva? (1 = Sí, 0 = No): ");// Al final del proceso, preguntar si desea continuar
+                formativas4.op = sc.nextInt();// Actualizar la variable estática
+                sc.nextLine();// Limpiar el buffer
+
+                if (formativas4.op !=1 |formativas4.op !=0) {
+                    opcionValida = true;
+                }else {
+                    System.out.println("Opción no válida ingresa el número 1 o 0 ");
+                }
+            }catch (InputMismatchException e){
+                System.out.println("Opción no válida ingresa el número 1 o 0 ");
+                sc.nextLine();
+            }
+
+        }//Fin while opción valida
+
+
+
 
             if (formativas4.op != 1) {
                 System.out.println("Volviendo al menú principal...");
