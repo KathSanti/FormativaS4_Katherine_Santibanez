@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class procesarCompra {
 
-    //variables recicladas taller 1 programación
+    //variables taller 1 programación
 
     static Boolean A1 = false, A2 = false, A3 = false, A4 = false, A5 = false, A6 = false;
     static Boolean B1 = false, B2 = false, B3 = false, B4 = false, B5 = false, B6 = false;
