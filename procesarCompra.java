@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 public class procesarCompra {
 
+    //variables recicladas taller 1 programación
 
     static Boolean A1 = false, A2 = false, A3 = false, A4 = false, A5 = false, A6 = false;
     static Boolean B1 = false, B2 = false, B3 = false, B4 = false, B5 = false, B6 = false;
@@ -138,10 +139,10 @@ public class procesarCompra {
 
             System.out.println("Asiento " + codigo + "-Precio: $" + precio);
             System.out.print("¿Confirmar reserva (S/N)? ");
-            String confirmar = sc.nextLine().trim().toUpperCase();
+            String confirmar = sc.nextLine().trim().toUpperCase(); //entrada confirmar reserva
 
             if (!confirmar.equals("S")) {
-                System.out.println("Reserva cancelada");
+                System.out.println("Reserva cancelada");//si cancela la reserva  vuelve al menú principal
                 continue;
             }
 
@@ -187,7 +188,8 @@ public class procesarCompra {
                 else E6 = true;
             }
 
-            // Datos para descuentos
+            // Parametros para aplicar descuento
+
             int edad = 0;
             boolean edadValida = false;
             while (!edadValida) {
@@ -209,16 +211,18 @@ public class procesarCompra {
                 }
             }
 
-            char verificadordescuento;
+
+
+            char verificadordescuento;// variable de entrada para verificar descuento estudiante y edad
+
             System.out.print("¿Eres estudiante? S/N: ");
-            verificadordescuento = sc.next().charAt(0);
+            verificadordescuento = sc.next().charAt(0);//Entrada
             sc.nextLine();
 
-            while (verificadordescuento != 'S' && verificadordescuento != 'N' &&
-                    verificadordescuento != 's' && verificadordescuento != 'n') {
+            while (verificadordescuento != 'S' && verificadordescuento != 'N' && verificadordescuento != 's' && verificadordescuento != 'n') {
                 System.out.println("Opción no válida");
                 System.out.print("Ingrese una opción válida (S/N): ");
-                verificadordescuento = sc.next().charAt(0);
+                verificadordescuento = sc.next().charAt(0);//Entrada error
                 sc.nextLine();
             }
 
@@ -227,13 +231,17 @@ public class procesarCompra {
             if (edad >= 60) {
                 descuentoaplicado = 0.15;
                 System.out.println("Descuento del 15% aplicado (adulto mayor)");
+
             } else if (verificadordescuento == 'S' || verificadordescuento == 's') {
                 descuentoaplicado = 0.10;
                 System.out.println("Descuento del 10% aplicado");
+
             } else {
                 descuentoaplicado = 0;
                 System.out.println("Sin descuento aplicado");
             }
+
+            //Calculo descuento y precio total a pagar
 
             double descuento = precio * descuentoaplicado;
             double totalapagar = precio - descuento;
