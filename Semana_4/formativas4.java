@@ -1,4 +1,4 @@
-package Semana4Formativa;
+package Formativas_DuocUC.Semana_4;
 
 import java.util.Scanner;
 
@@ -54,6 +54,9 @@ public class formativas4 {
             }
         }
     }
+
+
+
 
 
     //llamar al proceso de compra para usar de puente en mi clase main se define pc como objeto utilizando scanner para que pueda ser usado

@@ -1,4 +1,4 @@
-package Semana4Formativa;
+package Formativas_DuocUC.Semana_4;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
