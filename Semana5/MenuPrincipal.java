@@ -26,6 +26,7 @@ public class MenuPrincipal {
                 System.out.print("Opción: ");
                 String opcionMenu = sc.nextLine().trim();//entrada
 
+
                 if (opcionMenu.equals("1")) {
                     CompraEntradas(sc);//llama a la clase procesar compra
 

@@ -48,6 +48,7 @@ public class CompraEntradas {
                     continue;
                 }
 
+
                 // Reservar asiento
                 asientos[fila][columna] = true;
                 System.out.println("¡Reserva confirmada! Asiento " + codigo + " reservado.");
