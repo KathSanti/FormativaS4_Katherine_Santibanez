@@ -33,7 +33,7 @@ public class MenuPrincipal {
                     //sub preguntas después del proceso de compras
 
                     if (compraNumero >= 1) {
-                        System.out.print("¿Deseas realizar otra compra? (S/N): ");
+                        System.out.print("¿Deseas volver al menú principal? (S/N): ");
                         confirma = sc.next().charAt(0);//entrada
                         sc.nextLine();
 

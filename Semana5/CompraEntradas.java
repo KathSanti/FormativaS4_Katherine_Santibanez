@@ -1,18 +1,37 @@
 package Formativas_DuocUC.Semana5;
 
+import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class CompraEntradas {
 
     // Variables optimizadas usando arrays
     static boolean[][] asientos = new boolean[5][6]; // 5 filas (A-E), 6 columnas (1-6)
-    static int[] precios = {20000, 18000, 16000, 14000, 11000}; // Precios por fila
+    static int[] precios = {20000, 18000, 16000, 14000, 11000};
+    static ArrayList<Boleta> boletas = new ArrayList<>();
 
+    class Boleta {
+        String asiento;
+        int precioOriginal;
+        double descuento;
+        double totalPagar;
+        int edadCliente;
+
+        public Boleta(String asiento, int precioOriginal, double descuento, double totalPagar, int edadCliente) {
+            this.asiento = asiento;
+            this.precioOriginal = precioOriginal;
+            this.descuento = descuento;
+            this.totalPagar = totalPagar;
+            this.edadCliente = edadCliente;
+        }
+    }
+
+        // Precios por fila
 
         public void CompraEntradas(Scanner sc) {
             MenuPrincipal.op = 1;
-
-
+            boletas.clear();
 
 
             while (MenuPrincipal.op == 1) {
@@ -40,8 +59,8 @@ public class CompraEntradas {
                     continue;
                 }
 
-                int precio = precios[fila];
-                System.out.println("Asiento " + codigo + " - Precio: $" + precio);
+                int precioAsiento = precios[fila];
+                System.out.println("Asiento " + codigo + " - Precio: $" + precioAsiento);
 
                 if (!confirmarReserva(sc)) {
                     System.out.println("Reserva cancelada");
@@ -52,10 +71,28 @@ public class CompraEntradas {
                 // Reservar asiento
                 asientos[fila][columna] = true;
                 System.out.println("¡Reserva confirmada! Asiento " + codigo + " reservado.");
+
+                // Llamar descuento y obtener los valores
+                Boleta boleta = descuento(sc, precioAsiento, codigo);
+                boletas.add(boleta); //  Guardar boleta
+
+                // Reservar asiento
+                asientos[fila][columna] = true;
+                System.out.println("¡Reserva confirmada! Asiento " + codigo + " reservado.");
+
+                // Preguntar si quiere comprar otro asiento
+                System.out.print("¿Desea comprar otro asiento? (S/N): ");
+                String respuesta = sc.nextLine().trim().toUpperCase();
+                if (!respuesta.equals("S") && !respuesta.equals("SI")) {
+                    break;
+                }
+
+                imprimirBoletas();
+
             }
         }
 
-// para mostrar el estado de los asientos
+        // para mostrar el estado de los asientos
         private void mostrarAsientos() {
             System.out.println("\n==========  RESERVA DE ASIENTOS  ==========");
             System.out.println(" ");
@@ -91,5 +128,87 @@ public class CompraEntradas {
             String respuesta = sc.nextLine().trim().toUpperCase();
             return respuesta.equals("S") || respuesta.equals("SI");
         }
+
+
+        private Boleta descuento (Scanner sc, int precioAsiento, String codigoAsiento){
+
+            int edad = 0;
+            boolean edadValida = false;
+            double descuentoaplicado= 0;
+
+            while (!edadValida) {
+                try {
+                    System.out.print("Por favor ingrese su edad: ");
+                    edad = sc.nextInt();
+                    sc.nextLine();
+
+                    if (edad <= 0) {
+                        System.out.println("Error: La edad no puede ser negativa o cero.");
+                    } else if (edad > 120) {
+                        System.out.println("Error: La edad no puede ser mayor a 120 años.");
+                    } else {
+                        edadValida = true;
+                    }
+                } catch (InputMismatchException e) {
+                    System.out.println("Error: Debe ingresar un número entero válido.");
+                    sc.nextLine();
+                }// Calcular descuento
+
+                if (edad >= 60) {
+                    descuentoaplicado = 0.15;
+                    System.out.println("Descuento del 15% aplicado (adulto mayor)");
+
+                } else if (edad<=25) {
+                    descuentoaplicado = 0.10;
+                    System.out.println("Descuento del 10% aplicado");
+
+                } else {
+                    descuentoaplicado = 0;
+                    System.out.println("Sin descuento aplicado");
+                }
+
+
+            }
+
+            // Cálculos
+            double descuento = precioAsiento * descuentoaplicado;
+            double totalapagar = precioAsiento - descuento;
+
+
+            System.out.println("Precio original: $" + precioAsiento);
+            System.out.println("Descuento: $" + descuento);
+            System.out.println("Total a pagar: $" + totalapagar);
+
+            return new Boleta(codigoAsiento, precioAsiento, descuento, totalapagar, edad);
+
+        }
+
+    private void imprimirBoletas() {
+        System.out.println("\n==========  BOLETAS EMITIDAS  ==========");
+        double totalGeneral = 0;
+
+        for (int i = 0; i < boletas.size(); i++) {
+            Boleta boleta = boletas.get(i);
+            System.out.println("\n--- Boleta #" + (i + 1) + " ---");
+            System.out.println("Asiento: " + boleta.asiento);
+            System.out.println("Edad cliente: " + boleta.edadCliente);
+            System.out.println("Precio original: $" + boleta.precioOriginal);
+            System.out.println("Descuento: $" + boleta.descuento);
+            System.out.println("Total a pagar: $" + boleta.totalPagar);
+            totalGeneral += boleta.totalPagar;
+        }
+
+        System.out.println("\n=======================================");
+        System.out.println("TOTAL GENERAL: $" + totalGeneral);
+        System.out.println("Cantidad de boletas: " + boletas.size());
+        System.out.println("=======================================");
     }
+
+
+
+
+
+
+
+}
 
