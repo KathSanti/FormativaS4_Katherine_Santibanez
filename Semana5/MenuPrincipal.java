@@ -4,67 +4,114 @@ import java.util.Scanner;
 
 public class MenuPrincipal {
 
-    public static int op = 1; // Variable estática que controlará el bucle
+    public static int op = 0; // Variable estática que controlará el bucle
 
     public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        char confirma = 'S';
+        char volverMenu = 'S';
+        int compraNumero = 1;
 
+        do {
+            System.out.println("========================================================================");
+            System.out.println("||                     BIENVENIDO AL TEATRO  MORO                     ||");
+            System.out.println("========================================================================");
+            System.out.println(" ");
+            System.out.println("Por favor escoge una opción");
+            System.out.println("1) Comprar entrada");
+            System.out.println("2) Mostrar mapa de asientos");
+            System.out.println("3) Detalle compra");
+            System.out.println("4) Salir");
 
-        //Menú con ciclo for.
+            System.out.print("Opción: ");
+            String opcionMenu = sc.nextLine().trim();
 
-            Scanner sc = new Scanner(System.in); //hola kkio+o
-            char confirma = 'S';
-
-            for (int compraNumero = 1; confirma == 'S' || confirma == 's'; compraNumero++) {
-                System.out.println("========================================================================");
-                System.out.println("||                     BIENVENIDO AL TEATRO  MORO                     ||");
-                System.out.println("========================================================================");
-                System.out.println(" ");
-                System.out.println("Por favor escoge una opción");
-                System.out.println("1) Comprar entrada");
-                System.out.println("2) Salir");
-
-                System.out.print("Opción: ");
-                String opcionMenu = sc.nextLine().trim();//entrada
-
-
-                if (opcionMenu.equals("1")) {
-                    CompraEntradas(sc);//llama a la clase procesar compra
-
-                    //sub preguntas después del proceso de compras
+            switch (opcionMenu) {
+                case "1":
+                    CompraEntradas(sc);
 
                     if (compraNumero >= 1) {
                         System.out.print("¿Deseas volver al menú principal? (S/N): ");
-                        confirma = sc.next().charAt(0);//entrada
+                        confirma = sc.next().charAt(0);
                         sc.nextLine();
 
                         while (confirma != 'S' && confirma != 's' && confirma != 'N' && confirma != 'n') {
-                            System.out.println("Opción no válida");//salida error
+                            System.out.println("Opción no válida");
                             System.out.print("Ingrese una opción válida (S/N): ");
-                            confirma = sc.next().charAt(0);//entrada error
+                            confirma = sc.next().charAt(0);
                             sc.nextLine();
                         }
 
                         if (confirma == 'N' || confirma == 'n') {
-                            System.out.println("Gracias por su compra. ¡Hasta pronto!");//salida
-                            break;
+                            System.out.println("Gracias por su compra. ¡Hasta pronto!");
+                            volverMenu = 'N';
                         }
                     }
-
-                } else if (opcionMenu.equals("2")) {
-                    System.out.println("Gracias por visitarnos");//salida
                     break;
-                } else {
+
+                case "2":
+                    // Crear instancia y llamar
+                    CompraEntradas compra = new CompraEntradas();
+                    compra.mostrarAsientos();
+
+                    // Preguntar si desea volver al menú
+                    System.out.print("¿Deseas volver al menú principal? (S/N): ");
+                    volverMenu = sc.next().charAt(0);
+                    sc.nextLine();
+
+                    while (volverMenu != 'S' && volverMenu != 's' && volverMenu != 'N' && volverMenu != 'n') {
+                        System.out.println("Opción no válida");
+                        System.out.print("Ingrese una opción válida (S/N): ");
+                        volverMenu = sc.next().charAt(0);
+                        sc.nextLine();
+                    }
+
+                    if (volverMenu == 'N' || volverMenu == 'n') {
+                        System.out.println("Gracias por visitarnos. ¡Hasta pronto!");
+                    }
+                    break;
+
+                case "3":
+                    CompraEntradas imprimir = new CompraEntradas();
+                    imprimir.imprimirBoletas();
+
+                    // Preguntar si desea volver al menú
+                    System.out.print("¿Deseas volver al menú principal? (S/N): ");
+                    volverMenu = sc.next().charAt(0);
+                    sc.nextLine();
+
+                    while (volverMenu != 'S' && volverMenu != 's' && volverMenu != 'N' && volverMenu != 'n') {
+                        System.out.println("Opción no válida");
+                        System.out.print("Ingrese una opción válida (S/N): ");
+                        volverMenu = sc.next().charAt(0);
+                        sc.nextLine();
+                    }
+
+                    if (volverMenu == 'N' || volverMenu == 'n') {
+                        System.out.println("Gracias por visitarnos. ¡Hasta pronto!");
+                    }
+                    break;
+
+                case "4":
+                    System.out.println("Gracias por visitarnos");
+                    volverMenu = 'N';
+                    break;
+
+                default:
                     System.out.println("Opción no válida");
-                }
             }
-        }
 
+        } while (volverMenu != 'N' && volverMenu != 'n');
 
-        //llamar al proceso de compra para usar de puente en mi clase main se define pc como objeto utilizando scanner para que pueda ser usado
-
-
-        public static void CompraEntradas(Scanner sc) {
-            CompraEntradas pc = new CompraEntradas();//llamamos
-            pc.CompraEntradas(sc);
-        }
+        sc.close();
     }
+
+    public static void CompraEntradas(Scanner sc) {
+        CompraEntradas pc = new CompraEntradas();
+        pc.CompraEntradas(sc);
+    }
+
+
+}
+
+

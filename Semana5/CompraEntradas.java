@@ -9,6 +9,7 @@ public class CompraEntradas {
     // Variables optimizadas usando arrays
     static boolean[][] asientos = new boolean[5][6]; // 5 filas (A-E), 6 columnas (1-6)
     static int[] precios = {20000, 18000, 16000, 14000, 11000};
+    static String[] NombreEntradas = {"VIP","Platea Baja","Platea Baja","Palcos","Tribunas"};
     static ArrayList<Boleta> boletas = new ArrayList<>();
 
     class Boleta {
@@ -93,7 +94,7 @@ public class CompraEntradas {
         }
 
         // para mostrar el estado de los asientos
-        private void mostrarAsientos() {
+        public void mostrarAsientos() {
             System.out.println("\n==========  RESERVA DE ASIENTOS  ==========");
             System.out.println(" ");
             System.out.println("   " + "  1    2    3    4    5    6");
@@ -105,7 +106,8 @@ public class CompraEntradas {
                 for (int j = 0; j < asientos[i].length; j++) {
                     System.out.print(asientos[i][j] ? "[X]  " : "[ ]  ");
                 }
-                System.out.println("($" + precios[i] + ")");
+                System.out.println("($" + precios[i] + ")" + "-" + NombreEntradas[i]);
+
             }
             System.out.println();
         }
@@ -156,11 +158,16 @@ public class CompraEntradas {
 
                 if (edad >= 60) {
                     descuentoaplicado = 0.15;
+                    System.out.println(" " );
                     System.out.println("Descuento del 15% aplicado (adulto mayor)");
+                    System.out.println(" " );
 
                 } else if (edad<=25) {
                     descuentoaplicado = 0.10;
-                    System.out.println("Descuento del 10% aplicado");
+                    System.out.println(" " );
+                    System.out.println("Descuento del 10% aplicado (Estudiante)");
+                    System.out.println(" " );
+
 
                 } else {
                     descuentoaplicado = 0;
@@ -174,16 +181,18 @@ public class CompraEntradas {
             double descuento = precioAsiento * descuentoaplicado;
             double totalapagar = precioAsiento - descuento;
 
-
+            System.out.println("========= RESUMEN DE COMPRA =========" );
             System.out.println("Precio original: $" + precioAsiento);
             System.out.println("Descuento: $" + descuento);
             System.out.println("Total a pagar: $" + totalapagar);
+            System.out.println("=====================================" );
+            System.out.println(" " );
 
             return new Boleta(codigoAsiento, precioAsiento, descuento, totalapagar, edad);
 
         }
 
-    private void imprimirBoletas() {
+    public void imprimirBoletas() {
         System.out.println("\n==========  BOLETAS EMITIDAS  ==========");
         double totalGeneral = 0;
 
@@ -203,12 +212,6 @@ public class CompraEntradas {
         System.out.println("Cantidad de boletas: " + boletas.size());
         System.out.println("=======================================");
     }
-
-
-
-
-
-
 
 }
 
