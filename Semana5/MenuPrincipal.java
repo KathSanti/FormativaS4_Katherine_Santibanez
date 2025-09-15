@@ -8,9 +8,9 @@ public class MenuPrincipal {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        char confirma = 'S';
-        char volverMenu = 'S';
-        int compraNumero = 1;
+        char confirma = 'S';       // Variable Local
+        char volverMenu = 'S';     // Variable Local
+        int compraNumero = 1;      // Variable Local
 
         do {
             System.out.println("========================================================================");
@@ -21,14 +21,15 @@ public class MenuPrincipal {
             System.out.println("1) Comprar entrada");
             System.out.println("2) Mostrar mapa de asientos");
             System.out.println("3) Detalle compra");
-            System.out.println("4) Salir");
+            System.out.println("4) Eliminar entrada");
+            System.out.println("5) Salir");
 
             System.out.print("Opción: ");
             String opcionMenu = sc.nextLine().trim();
 
             switch (opcionMenu) {
                 case "1":
-                    CompraEntradas(sc);
+                    CompraEntradas(sc);//LLamar metodo para realizar el proceso de compras
 
                     if (compraNumero >= 1) {
                         System.out.print("¿Deseas volver al menú principal? (S/N): ");
@@ -50,9 +51,9 @@ public class MenuPrincipal {
                     break;
 
                 case "2":
-                    // Crear instancia y llamar
+                    // Crear instancia
                     CompraEntradas compra = new CompraEntradas();
-                    compra.mostrarAsientos();
+                    compra.mostrarAsientos();//LLamar metodo para Mostrar mapa con los asientos disponibles
 
                     // Preguntar si desea volver al menú
                     System.out.print("¿Deseas volver al menú principal? (S/N): ");
@@ -73,7 +74,7 @@ public class MenuPrincipal {
 
                 case "3":
                     CompraEntradas imprimir = new CompraEntradas();
-                    imprimir.imprimirBoletas();
+                    imprimir.imprimirBoletas();//LLamar metodo para imprimir todas las boletas emitidad
 
                     // Preguntar si desea volver al menú
                     System.out.print("¿Deseas volver al menú principal? (S/N): ");
@@ -93,6 +94,27 @@ public class MenuPrincipal {
                     break;
 
                 case "4":
+                    CompraEntradas eliminar = new CompraEntradas();
+                    eliminar.eliminarBoletaPorAsiento(sc);//LLamar metodo para eliminar un asiento
+
+                    // Preguntar si desea volver al menú
+                    System.out.print("¿Deseas volver al menú principal? (S/N): ");
+                    volverMenu = sc.next().charAt(0);
+                    sc.nextLine();
+
+                    while (volverMenu != 'S' && volverMenu != 's' && volverMenu != 'N' && volverMenu != 'n') {
+                        System.out.println("Opción no válida");
+                        System.out.print("Ingrese una opción válida (S/N): ");
+                        volverMenu = sc.next().charAt(0);
+                        sc.nextLine();
+                    }
+
+                    if (volverMenu == 'N' || volverMenu == 'n') {
+                        System.out.println("Gracias por visitarnos. ¡Hasta pronto!");
+                    }
+                    break;
+
+                case "5":
                     System.out.println("Gracias por visitarnos");
                     volverMenu = 'N';
                     break;
@@ -110,6 +132,8 @@ public class MenuPrincipal {
         CompraEntradas pc = new CompraEntradas();
         pc.CompraEntradas(sc);
     }
+
+
 
 
 }
