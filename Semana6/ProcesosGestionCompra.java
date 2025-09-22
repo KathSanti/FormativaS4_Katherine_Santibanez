@@ -2,17 +2,21 @@ package Formativas_DuocUC.Semana6;
 
 import Formativas_DuocUC.Semana6.MenuTeatroMoro;
 
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
 
 public class ProcesosGestionCompra {
 
     static boolean[][] asientos = new boolean[5][6];
     static boolean [][] reservaPendiente = new boolean[5][6];
     static int[] preciosUnitarios = {20000, 18000, 16000, 14000, 11000};
+    private Timer timerReserva;
 
-    // NUEVOS ATRIBUTOS para almacenar información de compra
+    // Variables estáticas para almacenar información de compra
     static int totalCompra = 0;
     static int cantidadAsientosComprados = 0;
     static List<String> detallesAsientos = new ArrayList<>();
@@ -21,6 +25,7 @@ public class ProcesosGestionCompra {
     public void ReservasEntradas(Scanner sc) {
         MenuTeatroMoro.opcioMenuTeatro = 1;
         boolean seguirReservando = true;
+        timerReserva = new Timer(true);
 
         while (seguirReservando) {
             MostrarMapaAsientos();
@@ -60,9 +65,12 @@ public class ProcesosGestionCompra {
                 continue;
             }
 
-            // Reservar asiento
-            reservaPendiente[fila][columna] = true;
+            // Reservar asiento , se inicializa temporizador
+            reservaPendiente[fila][columna] = true; //Punto debug para verficar si el asiento selccionado por el usuario cambia a true
+            iniciarTemporizadorRerserva(fila, columna,coordenadaAsiento);
+
             System.out.println("¡Reserva confirmada! Asiento " + coordenadaAsiento + " reservado. Valor: $" + precioAsiento);
+            System.out.println("Tienes 3 min para confirmar la compra de tus asientos reservados");
 
             // Preguntar si quiere reservar otro asiento
             System.out.print("¿Deseas reservar otro asiento? (S/N): ");
@@ -73,16 +81,48 @@ public class ProcesosGestionCompra {
                 System.out.print("¿Deseas confirmar la compra de tus asientos reservados? (S/N): ");
                 String respuestaCompra = sc.nextLine().trim().toUpperCase();
 
+
+                //DEBUG: para verficar si el asiento selccionado por el usuario cambia a ocupado - se cancela temprozador.
+
                 if (respuestaCompra.equals("S") || respuestaCompra.equals("SI")) {
                     comprarAsientosReservados();
+                    cancelarTemporizadores();
                 } else {
-                    System.out.println("Tus reservas se mantienen. Puedes comprarlas más tarde.");
+                    System.out.println("Tus reservas se mantienen. Puedes comprarlas más tarde, ");
+                    System.out.println("\n¡RECUERDA! que tienes 3 min para comprar tus asientos");
                 }
                 seguirReservando = false;
             }
         }
     }
 
+
+    //Temprizador explicado en Taller 2
+
+    private void iniciarTemporizadorRerserva(int fila, int columna, String coordenadaAsiento) {
+        TimerTask taskTemporizadorRerserva = new TimerTask() {
+            @Override
+            public void run() {
+                synchronized (ProcesosGestionCompra.this){
+                    if(reservaPendiente[fila][columna] && !asientos[fila][columna]){
+                        reservaPendiente[fila][columna] = false;
+                        System.out.println("La reserva del asiento "+ coordenadaAsiento + " ha expirado de los 3 min y el asiento ha sido liberado");
+
+                    }
+
+                }
+            }
+        };
+
+        timerReserva.schedule(taskTemporizadorRerserva, 180000);//3 min
+    }
+
+    private void cancelarTemporizadores() {
+        if (timerReserva != null) {
+            timerReserva.cancel();
+            timerReserva.purge();
+        }
+    }
 
     public void comprarAsientosReservados() {
         totalCompra = 0; // Reiniciar valores
@@ -130,6 +170,7 @@ public class ProcesosGestionCompra {
 
 
         System.out.println("\n==========  RESERVA DE ASIENTOS  ==========");
+        System.out.println("\n   [ ]Libre - [R] Rerservado - [X] Ocupado ");
         System.out.println(" ");
         System.out.println("   " + "  1    2    3    4    5    6");
 
@@ -160,12 +201,9 @@ public class ProcesosGestionCompra {
                 Character.isDigit(coodenadaAsiento.charAt(1)); //verifica que el segundo digito sea nro
     }
 
-    // para validar rango del asiento
     private boolean validarRangoAsiento(int fila, int columna) {
         return fila >= 0 && fila < 5 && columna >= 0 && columna < 6;
     }
-
-
 
     private boolean confirmarReserva(Scanner sc) {
         System.out.print("¿Confirmar reserva (S/N)? ");
@@ -180,7 +218,7 @@ public class ProcesosGestionCompra {
 
         MostrarMapaAsientos();
 
-        // Verificar si hay asientos ocupados
+        // Variable local para Verificar si hay asientos ocupados
         boolean reservaEncontrada = false;
 
         for (int i = 0; i < reservaPendiente.length; i++) {
@@ -194,11 +232,11 @@ public class ProcesosGestionCompra {
         }
 
         if (!reservaEncontrada) {
-            System.out.println("No hay boletas para eliminar.");
+            System.out.println("No hay reservas para eliminar.");
             return;
         }
 
-        System.out.print("Ingrese el asiento de la boleta a eliminar (ej: A1, B5): ");
+        System.out.print("Ingrese su reserva a eliminar (ej: A1, B5): ");
         String asientoABuscar = sc.nextLine().trim().toUpperCase();
 
         // Validar formato
@@ -222,7 +260,7 @@ public class ProcesosGestionCompra {
             // Verificar si el asiento está ocupado
             if (reservaPendiente[fila][columna]) {
                 reservaPendiente[fila][columna] = false; // Liberar el asiento
-                System.out.println("Boleta eliminada correctamente. Asiento " + asientoABuscar + " liberado.");
+                System.out.println("Reserva eliminada correctamente. Asiento " + asientoABuscar + " liberado.");
             } else {
                 System.out.println("No hay reserva en el asiento: " + asientoABuscar);
             }
@@ -233,21 +271,28 @@ public class ProcesosGestionCompra {
     }
 
     public void imprimirDetalleBoleta() {
+        // DEBUG: Verificar estado inicial - cantidadAsientosComprados = 0, no hay compras.
+        System.out.println("DEBUG: Cantidad asientos = " + cantidadAsientosComprados + ", Total = $" + totalCompra);
 
         if (cantidadAsientosComprados == 0) {
-            System.out.println("No hay compras realizadas.");
+            System.out.println("=====================================");
+            System.out.println("       No hay compras realizadas.    ");
             System.out.println("=====================================");
             return;
         }
 
-
+        // DEBUG: Verificar contenido de detallesAsientos antes de imprimir
+        System.out.println("DEBUG: detallesAsientos = " + detallesAsientos);
 
         System.out.println("========== BOLETA DETALLE ==========");
         System.out.println("Ubicación asientos: " + detallesAsientos );
         System.out.println("Cantidad entradas:" + cantidadAsientosComprados);
         System.out.println("Total cancelado: $" + totalCompra);
-        System.out.println("=====================================");
 
+        // DEBUG: Confirmar que se ejecutó el metodo de impresión
+        System.out.println("DEBUG: Boleta impresa completamente");
+
+        System.out.println("=====================================");
     }
 
 

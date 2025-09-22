@@ -12,8 +12,9 @@ public class MenuTeatroMoro {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        char confirma = ' ';       // Variable Local
-        char volverMenu = 'S';     // Variable Local
+        char confirma = 'S';
+        char volverMenu = 'S';
+        char salirMenu = 'N';
 
         do {
             System.out.println("========================================================================");
@@ -28,11 +29,12 @@ public class MenuTeatroMoro {
 
             System.out.print("Opción: ");
             int opcionMenu = sc.nextInt();
+            sc.nextLine();
 
             switch (opcionMenu) {
                 case 1:
 
-                    ReservasEntradas(sc);
+                    ReservasEntradas(sc); //Llamamos metodo clase proceso gestion compra
 
 
                         System.out.print("¿Deseas volver al menú principal? (S/N): ");
@@ -42,7 +44,7 @@ public class MenuTeatroMoro {
                         while (confirma != 'S' && confirma != 's' && confirma != 'N' && confirma != 'n') {
                             System.out.println("Opción no válida");
                             System.out.print("Ingrese una opción válida (S/N): ");
-                            confirma = sc.next().charAt(0);
+                            confirma = sc.next().charAt(0); // Variable Local entrada usuario
                             sc.nextLine();
                         }
 
@@ -53,13 +55,12 @@ public class MenuTeatroMoro {
 
                     break;
                 case 2:
-                    sc.nextLine();
                     ProcesosGestionCompra Modificar = new ProcesosGestionCompra();
-                    Modificar.ModificarReserva(sc);
+                    Modificar.ModificarReserva(sc); //Llamamos metodo clase proceso gestion compra
 
                     // Preguntar si desea volver al menú
                     System.out.print("¿Deseas volver al menú principal? (S/N): ");
-                    volverMenu = sc.next().charAt(0);
+                    volverMenu = sc.next().charAt(0); // Variable Local entrada usuario
                     sc.nextLine();
 
                     while (volverMenu != 'S' && volverMenu != 's' && volverMenu != 'N' && volverMenu != 'n') {
@@ -76,6 +77,7 @@ public class MenuTeatroMoro {
                 case 3:
                     ProcesosGestionCompra imprimir = new ProcesosGestionCompra();
                     imprimir.imprimirDetalleBoleta();
+
                     // Preguntar si desea volver al menú
                     System.out.print("¿Deseas volver al menú principal? (S/N): ");
                     volverMenu = sc.next().charAt(0);
@@ -85,7 +87,6 @@ public class MenuTeatroMoro {
                         System.out.println("Opción no válida");
                         System.out.print("Ingrese una opción válida (S/N): ");
                         volverMenu = sc.next().charAt(0);
-                        sc.nextLine();
                     }
 
                     if (volverMenu == 'N' || volverMenu == 'n') {
@@ -94,7 +95,24 @@ public class MenuTeatroMoro {
 
                     break;
                 case 4:
-                    System.out.println("Gracias por visitarnos");
+                    // Preguntar si esta seguro de salir
+                    System.out.print("¿Estás seguro que deseas salir? (S/N): ");
+                    salirMenu = sc.next().charAt(0);
+                    sc.nextLine();
+
+                    while (salirMenu != 'S' && salirMenu != 's' && salirMenu != 'N' && salirMenu != 'n') {
+                        System.out.println("Opción no válida");
+                        System.out.print("Ingrese una opción válida (S/N): ");
+                        salirMenu = sc.next().charAt(0);
+                        sc.nextLine();
+                    }
+
+                    if (salirMenu == 'N' || salirMenu == 'n') {
+                        System.out.println("Volviendo al menú principal");
+                    }
+                    if (salirMenu == 'S' || salirMenu == 's') {
+                        System.out.println("Gracias por visitarnos. ¡Hasta pronto! ");
+                    }
                     break;
 
                 default:
@@ -103,7 +121,7 @@ public class MenuTeatroMoro {
 
 
 
-        }while (volverMenu != 'N' && volverMenu != 'n');
+        }while ((salirMenu != 'S' && salirMenu != 's') && (volverMenu == 'S' || volverMenu == 's'));
 
 
     }
