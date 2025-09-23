@@ -6,8 +6,7 @@ import java.util.Scanner;
 
 public class MenuTeatroMoro {
 
-    public static int opcioMenuTeatro = 0
-            ;
+    public static int opcioMenuTeatro = 0;
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -44,7 +43,7 @@ public class MenuTeatroMoro {
                         while (confirma != 'S' && confirma != 's' && confirma != 'N' && confirma != 'n') {
                             System.out.println("Opción no válida");
                             System.out.print("Ingrese una opción válida (S/N): ");
-                            confirma = sc.next().charAt(0); // Variable Local entrada usuario
+                            confirma = sc.next().charAt(0);
                             sc.nextLine();
                         }
 
@@ -60,7 +59,7 @@ public class MenuTeatroMoro {
 
                     // Preguntar si desea volver al menú
                     System.out.print("¿Deseas volver al menú principal? (S/N): ");
-                    volverMenu = sc.next().charAt(0); // Variable Local entrada usuario
+                    volverMenu = sc.next().charAt(0);
                     sc.nextLine();
 
                     while (volverMenu != 'S' && volverMenu != 's' && volverMenu != 'N' && volverMenu != 'n') {

@@ -24,7 +24,7 @@ public class ProcesosGestionCompra {
 
     public void ReservasEntradas(Scanner sc) {
         MenuTeatroMoro.opcioMenuTeatro = 1;
-        boolean seguirReservando = true;
+        boolean seguirReservando = true; //Variable Local
         timerReserva = new Timer(true);
 
         while (seguirReservando) {
@@ -66,7 +66,7 @@ public class ProcesosGestionCompra {
             }
 
             // Reservar asiento , se inicializa temporizador
-            reservaPendiente[fila][columna] = true; //Punto debug para verficar si el asiento selccionado por el usuario cambia a true
+            reservaPendiente[fila][columna] = true; //DEBUG: para verficar si el asiento selccionado por el usuario cambia a true
             iniciarTemporizadorRerserva(fila, columna,coordenadaAsiento);
 
             System.out.println("¡Reserva confirmada! Asiento " + coordenadaAsiento + " reservado. Valor: $" + precioAsiento);
@@ -272,7 +272,6 @@ public class ProcesosGestionCompra {
 
     public void imprimirDetalleBoleta() {
         // DEBUG: Verificar estado inicial - cantidadAsientosComprados = 0, no hay compras.
-        System.out.println("DEBUG: Cantidad asientos = " + cantidadAsientosComprados + ", Total = $" + totalCompra);
 
         if (cantidadAsientosComprados == 0) {
             System.out.println("=====================================");
@@ -281,33 +280,18 @@ public class ProcesosGestionCompra {
             return;
         }
 
-        // DEBUG: Verificar contenido de detallesAsientos antes de imprimir
-        System.out.println("DEBUG: detallesAsientos = " + detallesAsientos);
-
+        // DEBUG: Verificar contenido de detalles Asientos antes de imprimir
         System.out.println("========== BOLETA DETALLE ==========");
         System.out.println("Ubicación asientos: " + detallesAsientos );
         System.out.println("Cantidad entradas:" + cantidadAsientosComprados);
         System.out.println("Total cancelado: $" + totalCompra);
-
         // DEBUG: Confirmar que se ejecutó el metodo de impresión
-        System.out.println("DEBUG: Boleta impresa completamente");
-
         System.out.println("=====================================");
     }
 
 
 
-
-
-
-
-
-
-
-
-
-
-}
+}//Fin ProcesosGestionCompra
 
 
 
