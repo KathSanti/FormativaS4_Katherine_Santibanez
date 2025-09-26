@@ -1,6 +1,7 @@
 package Formativas_DuocUC.Semana7;
 
 import java.util.Scanner;
+
 import Formativas_DuocUC.Semana7.GestionListDataJava;
 
 public class TeatroMoroMenu {
@@ -32,18 +33,86 @@ public class TeatroMoroMenu {
 
             switch (opcionMenu) {
                 case 1:
+                    VentaEntradas(sc);
+
+                    System.out.print("¿Deseas volver al menú principal? (S/N): ");
+                    confirma = sc.next().charAt(0);
+                    sc.nextLine();
+
+                    while (confirma != 'S' && confirma != 's' && confirma != 'N' && confirma != 'n') {
+                        System.out.println("Opción no válida");
+                        System.out.print("Ingrese una opción válida (S/N): ");
+                        confirma = sc.next().charAt(0);
+                        sc.nextLine();
+                    }
+
+                    if (confirma == 'N' || confirma == 'n') {
+                        System.out.println("Gracias por su compra. ¡Hasta pronto!");
+                        volverMenu = 'N';
+                    }
 
                     break;
                 case 2:
+                    GestionListDataJava resumen = new GestionListDataJava();
+                    resumen.ResumenVentas();
 
+                    System.out.print("¿Deseas volver al menú principal? (S/N): ");
+                    confirma = sc.next().charAt(0);
+                    sc.nextLine();
 
+                    while (confirma != 'S' && confirma != 's' && confirma != 'N' && confirma != 'n') {
+                        System.out.println("Opción no válida");
+                        System.out.print("Ingrese una opción válida (S/N): ");
+                        confirma = sc.next().charAt(0);
+                        sc.nextLine();
+                    }
+
+                    if (confirma == 'N' || confirma == 'n') {
+                        System.out.println("Gracias por su compra. ¡Hasta pronto!");
+                        volverMenu = 'N';
+                    }
 
                     break;
                 case 3:
+                    GestionListDataJava imprimir = new GestionListDataJava();
+                    imprimir.imprimirBoletas();
 
+                    System.out.print("¿Deseas volver al menú principal? (S/N): ");
+                    confirma = sc.next().charAt(0);
+                    sc.nextLine();
+
+                    while (confirma != 'S' && confirma != 's' && confirma != 'N' && confirma != 'n') {
+                        System.out.println("Opción no válida");
+                        System.out.print("Ingrese una opción válida (S/N): ");
+                        confirma = sc.next().charAt(0);
+                        sc.nextLine();
+                    }
+
+                    if (confirma == 'N' || confirma == 'n') {
+                        System.out.println("Gracias por su compra. ¡Hasta pronto!");
+                        volverMenu = 'N';
+                    }
 
                     break;
                 case 4:
+                    // Preguntar si esta seguro de salir
+                    System.out.print("¿Estás seguro que deseas salir? (S/N): ");
+                    salirMenu = sc.next().charAt(0);
+                    sc.nextLine();
+
+                    while (salirMenu != 'S' && salirMenu != 's' && salirMenu != 'N' && salirMenu != 'n') {
+                        System.out.println("Opción no válida");
+                        System.out.print("Ingrese una opción válida (S/N): ");
+                        salirMenu = sc.next().charAt(0);
+                        sc.nextLine();
+                    }
+
+                    if (salirMenu == 'N' || salirMenu == 'n') {
+                        System.out.println("Volviendo al menú principal");
+                    }
+                    if (salirMenu == 'S' || salirMenu == 's') {
+                        System.out.println("Gracias por visitarnos. ¡Hasta pronto! ");
+                    }
 
                     break;
 
@@ -58,5 +127,10 @@ public class TeatroMoroMenu {
 
 
 
+    }
+
+    public static void VentaEntradas(Scanner sc) {
+        GestionListDataJava Shopping = new GestionListDataJava();
+        Shopping.VentaEntradas(sc);
     }
 }
